@@ -1,4 +1,4 @@
-FROM golang:1.9-alpine
+FROM golang:1.10-alpine
 
 COPY root /
 
@@ -10,14 +10,12 @@ RUN apk add --no-cache ca-certificates \
         gcc \
         git \
         musl-dev \
-        bash \
     && mkdir -p "$GOPATH/src" "$GOPATH/bin" \
     && chmod -R 777 "$GOPATH" \
-    && chmod +x /entrypoint.sh
-
-RUN go get github.com/derekparker/delve/cmd/dlv
+    && chmod +x /entrypoint.sh \
+    && go get github.com/derekparker/delve/cmd/dlv
 
 WORKDIR $GOPATH
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["go", "run", "main.go"]
+CMD ["dlv", "debug", "--headless", "--listen=:2345", "--api-version=2"]

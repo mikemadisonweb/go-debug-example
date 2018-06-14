@@ -1,21 +1,14 @@
 version: '3'
 services:
   app:
-    container_name: "first-app"
+    container_name: "app"
     build: "./docker/go-debug"
     volumes:
       - ".:${GO_PROJECT_DIR}"
+    environment:
+      GO_WORK_DIR: "${GO_PROJECT_DIR}/app"
     ports:
       - "8080:8080"
-    environment:
-      GO_WORK_DIR: "${GO_PROJECT_DIR}/app/first"
-
-  another-app:
-    container_name: "second-app"
-    build: "./docker/go-debug"
-    volumes:
-      - ".:${GO_PROJECT_DIR}"
-    ports:
-      - "8181:8181"
-    environment:
-      GO_WORK_DIR: "${GO_PROJECT_DIR}/app/second"
+      - "2345:2345"
+    security_opt:
+      - "seccomp:unconfined"

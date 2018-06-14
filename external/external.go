@@ -1,4 +1,4 @@
-package common
+package external
 
 import (
 	"net/http"
@@ -6,8 +6,7 @@ import (
 	"log"
 )
 
-const AppName = "app"
-const AnotherAppName = "another-app"
+const AppName = "awesome"
 
 func StartServer(port string, handlerFunc http.HandlerFunc) {
 	http.HandleFunc("/", handlerFunc)
